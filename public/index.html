@@ -92,7 +92,7 @@ h2{
             //parsed JSON data
              const parsedJson = JSON.parse(inputData)
             //post JSON data
-            const res = await fetch("http://localhost:3000/post",{
+            const res = await fetch("/post",{
                 method:"POST",
                 headers:{
                 "Content-Type":"application/json"
