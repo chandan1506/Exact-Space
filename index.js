@@ -3,18 +3,15 @@ const express = require("express")
 const app = express()
 app.use(express.json())
 
-//dotenv
-require("dotenv").config()
-const Port  = process.env.port
-
 //cors
 const cors = require("cors")
 app.use(cors())
 
-//Base API
-app.get("/",(req,res)=>{
-    res.json("WELCOME TO BASE API")
-})
+// get Api for Frontend
+app.use(express.static(__dirname + "/public"));
+app.get("/", (req, res) => {
+  res.sendFile(__dirname, "public", "index.html");
+});
 
 //APi for posting JSON
 app.post("/post",(req,res)=>{
@@ -36,9 +33,9 @@ app.post("/post",(req,res)=>{
 
 
 //establishing server
-app.listen(Port,()=>{
+app.listen(3000,()=>{
     try{
-        console.log(`server is running at ${Port}`)
+        console.log("server is running on port 3000")
     }catch(err){
         console.log(err.message)
     }

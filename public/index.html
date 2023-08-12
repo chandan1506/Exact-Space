@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>document</title>
 </head>
 <style>
 .container{
@@ -38,7 +38,6 @@
 }
 .contSec{
     margin-top: 50px;
-    border: 2px solid red ;
 }
 h2{
     color: green;
@@ -46,6 +45,18 @@ h2{
 #formContainer{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
+    padding:20px;
+    display:none
+}
+#label{
+    margin-right: 20px;
+    font-size: 20px;
+}
+#textInput{
+    height:40px;
+    border: 2px solid black;
+    padding-left: 20px;
+    
 }
 
 </style>
@@ -54,13 +65,13 @@ h2{
         <div class="contFirst">
              <!-- form for JSON input -->
             <form id="Form">
-                <textarea id="inputData" name="inputData" rows="10" cols="40" placeholder="Enter JSON Only"></textarea>
+                <textarea id="inputData" name="inputData" rows="10" cols="40" placeholder="Enter JSON Only" required></textarea>
                 <input type="submit" id="sub_btn">
             </form>
         </div>
         <div class="contSec">
                     <!--output header section  -->
-            <h2>Output will be shown here </h2>
+            <h2>Output will be shown below 👇 </h2>
             <div id="formContainer">
                 <!-- output will be inserted here -->
             </div>
@@ -69,12 +80,13 @@ h2{
 </body>
 </html>
 <script>
+
+    let bag = ""
     const Form = document.getElementById("Form")
     Form.addEventListener("submit",async (e)=>{
         e.preventDefault()
 
         const inputData = document.getElementById("inputData").value
-         
          
         try {
             //parsed JSON data
@@ -87,15 +99,44 @@ h2{
                 },
                 body: JSON.stringify(parsedJson)
             })
-            if(res.ok){
-                const response = await res.json();
-                alert(response)
-            }
+            const response = await res.json();
+            bag = response
+            //calling render function
+            render(bag)
         } catch (error) {
             alert("invalid Json")
         }
-
-
     })
+
+
+   //rendering input data in formContainer
+
+   function render(data){
+
+    const formContainer = document.getElementById("formContainer")
+    formContainer.style.display = "block"
+    formContainer.innerHTML = ""
+      
+      //creating form 
+    const form = document.createElement("form");
+        for (let key in data) {
+            //creating label
+            const label = document.createElement("label");
+            label.innerText= key;
+            label.setAttribute("id","label")
+
+           //creating input
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = key;
+            input.value = data[key];
+            input.setAttribute("id","textInput")
+
+            //appending label and input in to form
+            form.append(label,input);
+        }
+        //appending form in to formContainer div.
+        formContainer.append(form);
+   }
 
 </script>
