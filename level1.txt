@@ -1,0 +1,24 @@
+# Change the specific directory where log files are located
+  -  cd /c/programData/chocolatey/logs
+
+
+# Find all log files with the extension of ".log"
+  -   find ./ -type f -name "*.log" 
+             or  
+      find . -name "*.log"
+
+
+# Find all log files with the extension of ".log" and display size information in detail
+  -  find . -name "*.log" -exec ls -lh {} \;
+
+
+# Find all log files with the extension of ".log" sorting them in descending order and showing the largest one
+  -  find . -name "*.log" -exec du -h {} + | sort -rh | head -n 1
+
+
+# Truncate the log file("chocolatey.log") and display the first 100 lines 
+  -  head -n 100 ./chocolatey.log
+
+
+# Save the 100 lines of file named "chocolatey.log" to new file named "first_100_lines.log"
+  -  head -n 100 ./chocolatey.log > first_100_lines.log
